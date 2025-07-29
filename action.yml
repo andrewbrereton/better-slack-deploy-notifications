@@ -1,4 +1,4 @@
-name: 'Better zSlack Deployment Notifications'
+name: 'Better Slack Deployment Notifications'
 description: 'Send real-time deployment notifications to Slack with progress updates'
 author: 'andrewbrereton'
 
