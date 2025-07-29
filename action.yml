@@ -1,4 +1,4 @@
-name: 'Better Slack Deployment Notifications'
+name: 'Better zSlack Deployment Notifications'
 description: 'Send real-time deployment notifications to Slack with progress updates'
 author: 'andrewbrereton'
 
@@ -38,6 +38,11 @@ outputs:
 runs:
   using: 'composite'
   steps:
+    - name: Setup notification scripts
+      shell: bash
+      run: |
+        chmod +x ${{ github.action_path }}/scripts/*.sh
+        echo "ACTION_PATH=${{ github.action_path }}" >> $GITHUB_ENV
     - name: Execute notification
       id: slack-notification
       shell: bash
