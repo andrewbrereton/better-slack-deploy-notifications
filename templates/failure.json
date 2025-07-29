@@ -1,0 +1,72 @@
+{
+  "channel": "${CHANNEL_ID}",
+  "ts": "${MESSAGE_TS}",
+  "text": "❌ Deployment Failed - ${GITHUB_REPOSITORY}",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "❌ ${ENVIRONMENT} Deployment Failed"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Repository:* ${GITHUB_REPOSITORY}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Status:* ❌ Failed"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Actor:* ${GITHUB_ACTOR}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Environment:* ${ENVIRONMENT}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Branch:* ${GITHUB_REF_NAME}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Failed After:* ${DURATION_TEXT}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "🚨 *Deployment failed during ${STEP_NAME} step*"
+      }
+    },
+    {
+      "type": "actions",
+      "elements": [
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "🔍 Debug Logs"
+          },
+          "style": "danger",
+          "url": "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+        },
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "📊 View Commit"
+          },
+          "url": "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
+        }
+      ]
+    }
+  ]
+}

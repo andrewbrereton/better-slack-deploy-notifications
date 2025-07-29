@@ -1,0 +1,50 @@
+{
+  "channel": "${CHANNEL_ID}",
+  "ts": "${MESSAGE_TS}",
+  "text": "🚀 Deployment Progress - ${GITHUB_REPOSITORY}",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "🚀 ${ENVIRONMENT} Deployment In Progress"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Repository:* ${GITHUB_REPOSITORY}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Status:* 🔄 ${STEP_NAME}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Actor:* ${GITHUB_ACTOR}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Environment:* ${ENVIRONMENT}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Branch:* ${GITHUB_REF_NAME}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Started:* ${CURRENT_TIME}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Progress:* ${STEP_NAME} is running..."
+      }
+    }
+  ]
+}

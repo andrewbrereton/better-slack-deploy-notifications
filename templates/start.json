@@ -1,0 +1,49 @@
+{
+  "channel": "${CHANNEL_ID}",
+  "text": "🚀 Deployment Starting - ${GITHUB_REPOSITORY}",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "🚀 ${ENVIRONMENT} Deployment Starting"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Repository:* ${GITHUB_REPOSITORY}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Status:* 🔄 Initialising"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Actor:* ${GITHUB_ACTOR}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Environment:* ${ENVIRONMENT}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Branch:* ${GITHUB_REF_NAME}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Started:* ${CURRENT_TIME}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Commit:* <${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}|${SHORT_SHA}>\n`${COMMIT_MSG}`"
+      }
+    }
+  ]
+}

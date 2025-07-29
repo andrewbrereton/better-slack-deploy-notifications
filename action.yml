@@ -1,0 +1,82 @@
+name: 'Better Slack Deploy Notifications'
+description: 'Send real-time deployment notifications to Slack with progress updates'
+author: 'Andrew Brereton'
+
+inputs:
+  slack-bot-token:
+    description: 'Slack bot OAuth token (xoxb-...)'
+    required: true
+  channel-id:
+    description: 'Slack channel ID for notifications'
+    required: true
+  deployment-status:
+    description: 'Deployment status: start, progress, success, failure'
+    required: true
+  message-timestamp:
+    description: 'Message timestamp for updates (from start notification)'
+    required: false
+  step-name:
+    description: 'Current deployment step name'
+    required: false
+    default: 'Deployment'
+  environment:
+    description: 'Deployment environment (production, staging, etc.)'
+    required: false
+    default: 'production'
+  custom-message:
+    description: 'Custom message to include in notification'
+    required: false
+
+outputs:
+  message-timestamp:
+    description: 'Slack message timestamp for subsequent updates'
+    value: ${{ steps.slack-notification.outputs.message-timestamp }}
+  message-url:
+    description: 'Direct URL to the Slack message'
+    value: ${{ steps.slack-notification.outputs.message-url }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup notification scripts
+      shell: bash
+      run: |
+        chmod +x ${{ github.action_path }}/scripts/*.sh
+        echo "ACTION_PATH=${{ github.action_path }}" >> $GITHUB_ENV
+
+    - name: Execute notification
+      id: slack-notification
+      shell: bash
+      run: |
+        case "${{ inputs.deployment-status }}" in
+          "start")
+            ${{ github.action_path }}/scripts/start-notification.sh
+            ;;
+          "progress")
+            ${{ github.action_path }}/scripts/update-notification.sh
+            ;;
+          "success")
+            ${{ github.action_path }}/scripts/success-notification.sh
+            ;;
+          "failure")
+            ${{ github.action_path }}/scripts/failure-notification.sh
+            ;;
+          *)
+            echo "Error: Invalid deployment-status. Use: start, progress, success, failure"
+            exit 1
+            ;;
+        esac
+      env:
+        SLACK_BOT_TOKEN: ${{ inputs.slack-bot-token }}
+        CHANNEL_ID: ${{ inputs.channel-id }}
+        MESSAGE_TS: ${{ inputs.message-timestamp }}
+        STEP_NAME: ${{ inputs.step-name }}
+        ENVIRONMENT: ${{ inputs.environment }}
+        CUSTOM_MESSAGE: ${{ inputs.custom-message }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+        GITHUB_ACTOR: ${{ github.actor }}
+        GITHUB_REF_NAME: ${{ github.ref_name }}
+        GITHUB_SHA: ${{ github.sha }}
+        GITHUB_SERVER_URL: ${{ github.server_url }}
+        GITHUB_RUN_ID: ${{ github.run_id }}
+        GITHUB_WORKFLOW: ${{ github.workflow }}

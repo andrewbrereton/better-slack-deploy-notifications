@@ -1,0 +1,78 @@
+{
+  "channel": "${CHANNEL_ID}",
+  "ts": "${MESSAGE_TS}",
+  "text": "✅ Deployment Successful - ${GITHUB_REPOSITORY}",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "✅ ${ENVIRONMENT} Deployment Successful"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Repository:* ${GITHUB_REPOSITORY}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Status:* ✅ Success"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Actor:* ${GITHUB_ACTOR}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Environment:* ${ENVIRONMENT}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Branch:* ${GITHUB_REF_NAME}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Duration:* ${DURATION_TEXT}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Commit:* <${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}|${SHORT_SHA}>"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "🎉 *Deployment completed successfully at ${CURRENT_TIME}*"
+      }
+    },
+    {
+      "type": "actions",
+      "elements": [
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "View Workflow"
+          },
+          "url": "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+        },
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "View Commit"
+          },
+          "url": "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}"
+        }
+      ]
+    }
+  ]
+}
