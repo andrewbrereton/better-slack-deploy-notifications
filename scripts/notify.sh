@@ -2,7 +2,8 @@
 set -e
 
 # Ensure jq is available (it's pre-installed on GitHub runners)
-if ! command -v jq &> /dev/null; then
+if ! command -v jq &> /dev/null
+then
     echo "Error: jq is required but not found"
     exit 1
 fi
@@ -14,7 +15,8 @@ export CURRENT_TIME=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 export CURRENT_TIMESTAMP=$(date +%s)
 
 # Calculate duration for success/failure cases
-if [ -n "$START_TIMESTAMP" ]; then
+if [ -n "$START_TIMESTAMP" ]
+then
     DURATION=$((CURRENT_TIMESTAMP - START_TIMESTAMP))
     export DURATION_MIN=$((DURATION / 60))
     export DURATION_SEC=$((DURATION % 60))
@@ -54,7 +56,8 @@ case "$DEPLOYMENT_STATUS" in
 
         # Extract and output message timestamp
         message_ts=$(echo "$response" | jq -r '.ts')
-        if [ "$message_ts" = "null" ]; then
+        if [ "$message_ts" = "null" ]
+        then
             echo "Error: Failed to send Slack message"
             echo "Response: $response"
             exit 1
